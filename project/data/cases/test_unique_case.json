@@ -1,0 +1,21 @@
+{
+  "title": "Unique Test Case",
+  "version": "1",
+  "categories": {
+    "suspect": ["A", "B", "C"],
+    "room": ["X", "Y", "Z"],
+    "time": ["1", "2", "3"],
+    "item": ["P", "Q", "R"]
+  },
+  "constraints": [
+    {"category_a": "suspect", "value_a": "A", "op": 0, "category_b": "room", "value_b": "X"},
+    {"category_a": "suspect", "value_a": "B", "op": 1, "category_b": "room", "value_b": "X"},
+    {"category_a": "suspect", "value_a": "B", "op": 0, "category_b": "time", "value_b": "2"},
+    {"category_a": "suspect", "value_a": "C", "op": 2, "category_b": "suspect", "value_b": "B"},
+    {"category_a": "suspect", "value_a": "A", "op": 0, "category_b": "item", "value_b": "P"},
+    {"category_a": "suspect", "value_a": "B", "op": 1, "category_b": "item", "value_b": "Q"},
+    {"category_a": "suspect", "value_a": "C", "op": 0, "category_b": "room", "value_b": "Z"}
+  ],
+  "murderer_category": "suspect",
+  "murderer_value": "A"
+}

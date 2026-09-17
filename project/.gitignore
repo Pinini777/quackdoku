@@ -1,0 +1,30 @@
+# Godot 4 ignores
+.import/
+export.cfg
+export_presets.cfg.user
+*.tmp
+*.log
+
+# User data
+user://
+user/
+
+# Build artifacts
+android/
+build/
+*.apk
+*.aab
+*.keystore
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python harness cache
+__pycache__/
+*.pyc
