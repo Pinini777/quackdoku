@@ -56,10 +56,10 @@ Chain strategy: stacked-to-main
 - [ ] 4.2 Implement start_resume.tscn.
 - [ ] 4.3 Implement tutorial.tscn with 5-minute skip.
 - [ ] 4.4 Implement mansion_explore.tscn.
-- [ ] 4.5 Implement case_board.tscn.
-- [ ] 4.6 Implement accusation.tscn.
-- [ ] 4.7 Implement ending.tscn.
-- [ ] 4.8 Wire CaseSession.
+- [x] 4.5 Implement case_board.tscn.
+- [x] 4.6 Implement accusation.tscn.
+- [x] 4.7 Implement ending.tscn.
+- [x] 4.8 Wire CaseSession.
 
 ## Phase 5: Assets, Audio, and Provenance
 
