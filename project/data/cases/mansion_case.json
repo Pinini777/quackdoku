@@ -1,0 +1,30 @@
+{
+  "title": "The Grand Fowl Mansion",
+  "version": "1",
+  "categories": {
+    "suspect": ["Sir Quacksalot", "Lady Waddle", "Lord Puddle", "Baron Billow", "Duchess Down", "Count Plucker"],
+    "room": ["Grand Foyer", "Kitchen", "Conservatory", "Library", "Cellar", "Rooftop"],
+    "time": ["8pm", "9pm", "10pm", "11pm", "12am", "1am"],
+    "item": ["Candlestick", "Letter Opener", "Velvet Rope", "Poison Vial", "Crowbar", "Pocket Watch"]
+  },
+  "constraints": [
+    {"category_a": "suspect", "value_a": "Sir Quacksalot", "op": 0, "category_b": "room", "value_b": "Grand Foyer"},
+    {"category_a": "suspect", "value_a": "Lord Puddle", "op": 0, "category_b": "room", "value_b": "Conservatory"},
+    {"category_a": "suspect", "value_a": "Duchess Down", "op": 0, "category_b": "room", "value_b": "Cellar"},
+    {"category_a": "suspect", "value_a": "Count Plucker", "op": 0, "category_b": "room", "value_b": "Rooftop"},
+    {"category_a": "suspect", "value_a": "Baron Billow", "op": 0, "category_b": "room", "value_b": "Library"},
+    {"category_a": "suspect", "value_a": "Sir Quacksalot", "op": 0, "category_b": "time", "value_b": "8pm"},
+    {"category_a": "suspect", "value_a": "Lord Puddle", "op": 0, "category_b": "time", "value_b": "10pm"},
+    {"category_a": "suspect", "value_a": "Duchess Down", "op": 0, "category_b": "time", "value_b": "12am"},
+    {"category_a": "suspect", "value_a": "Count Plucker", "op": 0, "category_b": "time", "value_b": "1am"},
+    {"category_a": "suspect", "value_a": "Lady Waddle", "op": 2, "category_b": "suspect", "value_b": "Baron Billow"},
+    {"category_a": "suspect", "value_a": "Sir Quacksalot", "op": 0, "category_b": "item", "value_b": "Candlestick"},
+    {"category_a": "suspect", "value_a": "Lord Puddle", "op": 0, "category_b": "item", "value_b": "Velvet Rope"},
+    {"category_a": "suspect", "value_a": "Count Plucker", "op": 0, "category_b": "item", "value_b": "Pocket Watch"},
+    {"category_a": "room", "value_a": "Library", "op": 0, "category_b": "item", "value_b": "Poison Vial"},
+    {"category_a": "suspect", "value_a": "Lady Waddle", "op": 1, "category_b": "item", "value_b": "Crowbar"},
+    {"category_a": "room", "value_a": "Kitchen", "op": 1, "category_b": "item", "value_b": "Pocket Watch"}
+  ],
+  "murderer_category": "item",
+  "murderer_value": "Poison Vial"
+}

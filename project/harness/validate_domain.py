@@ -15,6 +15,20 @@ from pathlib import Path
 
 
 # -----------------------------------------------------------------------------
+# Helpers
+# -----------------------------------------------------------------------------
+
+def _load_json(path: str) -> dict:
+    target = Path(path)
+    if not target.exists():
+        return {}
+    try:
+        return json.loads(target.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return {}
+
+
+# -----------------------------------------------------------------------------
 # Domain mirrors of the GDScript classes
 # -----------------------------------------------------------------------------
 
@@ -166,7 +180,9 @@ class CaseSolver:
         res.solution_count = len(solutions)
         res.valid = res.solution_count == 1
         if res.valid:
-            res.murderer_deterministic = self._murderer_for(solutions[0], definition) == definition.murderer_value
+            murderer = self._murderer_for(solutions[0], definition)
+            category_values = definition.categories.get(definition.murderer_category, [])
+            res.murderer_deterministic = bool(murderer) and definition.murderer_value in category_values
         else:
             res.error = f"Expected exactly one solution, found {res.solution_count}"
         return res
@@ -366,27 +382,6 @@ UNIQUE_CASE = {
     "murderer_value": "A",
 }
 
-MANSION_CASE = {
-    "title": "Mansion",
-    "version": "1",
-    "categories": {
-        "suspect": ["Duck", "Goose", "Swan", "Pigeon", "Crow", "Robin"],
-        "room": ["Hall", "Kitchen", "Garden", "Library", "Bath", "Cellar"],
-        "time": ["8pm", "9pm", "10pm", "11pm", "12am", "1am"],
-        "item": ["Candle", "Knife", "Rope", "Poison", "Pipe", "Letter"],
-    },
-    "constraints": [
-        {"category_a": "suspect", "value_a": "Duck", "op": OP_EQUALS, "category_b": "room", "value_b": "Hall"},
-        {"category_a": "suspect", "value_a": "Goose", "op": OP_NOT_EQUALS, "category_b": "room", "value_b": "Kitchen"},
-        {"category_a": "suspect", "value_a": "Swan", "op": OP_BEFORE, "category_b": "suspect", "value_b": "Crow"},
-        {"category_a": "suspect", "value_a": "Pigeon", "op": OP_ADJACENT, "category_b": "suspect", "value_b": "Robin"},
-        {"category_a": "suspect", "value_a": "Crow", "op": OP_EQUALS, "category_b": "item", "value_b": "Knife"},
-    ],
-    "murderer_category": "suspect",
-    "murderer_value": "Duck",
-}
-
-
 # -----------------------------------------------------------------------------
 # Harness runner
 # -----------------------------------------------------------------------------
@@ -437,10 +432,12 @@ class Harness:
         self.check("unique case solved", res.valid and res.solution_count == 1, res.error)
         self.check("unique murderer deterministic", res.murderer_deterministic)
 
-        mansion = CaseDefinition.from_dict(MANSION_CASE)
+        mansion_data = _load_json("project/data/cases/mansion_case.json")
+        mansion = CaseDefinition.from_dict(mansion_data)
         res = solver.validate(mansion)
-        self.check("mansion has solutions", res.solution_count > 0, res.error)
-
+        self.check("mansion case loads", bool(mansion_data))
+        self.check("mansion has exactly one solution", res.valid and res.solution_count == 1, res.error)
+        self.check("mansion murderer is deterministic", res.murderer_deterministic)
         state = CaseState(d)
         move = {"ca": "suspect", "va": "A", "cb": "room", "vb": "X", "state": CONFIRMED}
         mr = solver.apply(state, move)
@@ -462,6 +459,55 @@ class Harness:
             self.check("tampered save rejected", repo.load_valid("1") == {})
             repo.discard()
             self.check("discard removes", repo.load_valid("1") == {})
+
+        # Tutorial and case content checks
+        print("\n[Content]")
+        tutorial_data = _load_json("project/data/dialogue/tutorial.json")
+        self.check("tutorial json loads", bool(tutorial_data))
+        self.check(
+            "tutorial under five minutes",
+            tutorial_data.get("max_seconds", 0) <= 300,
+        )
+        self.check("tutorial skip allowed", tutorial_data.get("allow_skip", False))
+        steps = tutorial_data.get("steps", [])
+        valid_rules = {"narrative", "row", "column", "clue", "complete"}
+        gate_rules_ok = all(
+            step.get("rule", "") in valid_rules
+            for step in steps
+            if step.get("type") == "gate"
+        )
+        self.check("tutorial gate rules valid", gate_rules_ok)
+        self.check(
+            "tutorial ends at mansion",
+            tutorial_data.get("complete_transition") == "mansion_explore",
+        )
+        practice = CaseDefinition.from_dict(tutorial_data.get("practice_case", {}))
+        practice_res = solver.validate(practice)
+        self.check(
+            "tutorial practice case unique",
+            practice_res.valid and practice_res.solution_count == 1,
+            practice_res.error,
+        )
+
+        mansion_dialogue = _load_json("project/data/dialogue/mansion.json")
+        self.check("mansion dialogue loads", bool(mansion_dialogue))
+        self.check(
+            "mansion clue count matches constraints",
+            len(mansion_dialogue.get("clues", [])) == len(mansion.constraints),
+        )
+        ending = mansion_dialogue.get("ending", {})
+        self.check(
+            "mansion ending has revelation",
+            bool(ending.get("revelation", "")),
+        )
+        self.check(
+            "mansion ending has collectible",
+            bool(ending.get("collectible", {}).get("id", "")),
+        )
+        self.check(
+            "mansion ending has self-contained hook",
+            bool(ending.get("hook", "")),
+        )
 
         # Source PNG preservation check
         print("\n[Source Preservation]")

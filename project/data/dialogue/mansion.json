@@ -1,0 +1,39 @@
+{
+  "title": "The Grand Fowl Mansion",
+  "intro": [
+    {"speaker": "Lord Puddle", "text": "Detective, a guest has taken ill. Someone here carried the Poison Vial."},
+    {"speaker": "Detective", "text": "Six suspects, six rooms, six hours, six items. Let's fill the board."}
+  ],
+  "clues": [
+    "Sir Quacksalot insists he never left the Grand Foyer.",
+    "Lord Puddle was found in the Conservatory.",
+    "Duchess Down retired to the Cellar.",
+    "Count Plucker stargazed from the Rooftop.",
+    "Baron Billow was seen in the Library.",
+    "Sir Quacksalot arrived at 8pm.",
+    "Lord Puddle's watch stopped at 10pm.",
+    "Duchess Down's bedside clock read midnight.",
+    "Count Plucker recalled the 1am chime.",
+    "Lady Waddle arrived before Baron Billow.",
+    "The Candlestick belongs to Sir Quacksalot.",
+    "Lord Puddle was wrapped in the Velvet Rope.",
+    "The Pocket Watch was returned to Count Plucker.",
+    "The Poison Vial was discovered in the Library.",
+    "Lady Waddle refused to hold the Crowbar.",
+    "The Pocket Watch was never in the Kitchen."
+  ],
+  "errors": [
+    "That doesn't fit the witness statement.",
+    "Hmm, the timeline disagrees.",
+    "Check the clues again, detective."
+  ],
+  "ending": {
+    "revelation": "Baron Billow carried the Poison Vial in the Library at 11pm. The case is closed.",
+    "collectible": {
+      "id": "golden_feather",
+      "name": "Golden Feather",
+      "description": "A keepsake from your first solved case."
+    },
+    "hook": "A sealed invitation has arrived. Another mystery awaits when you are ready."
+  }
+}

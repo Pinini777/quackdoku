@@ -9,7 +9,7 @@
 | Chained PRs recommended | Yes |
 | Chain strategy | stacked-to-main |
 
-Decision needed before apply: Resolved — stacked-to-main, slice 1/4.
+Decision needed before apply: Resolved — stacked-to-main, slice 2/4.
 Chained PRs recommended: Yes
 Chain strategy: stacked-to-main
 400-line budget risk: High (slice 1 tracked separately)
@@ -44,11 +44,11 @@ Chain strategy: stacked-to-main
 
 ## Phase 3: Tutorial and Case Content
 
-- [ ] 3.1 Create data/dialogue/tutorial.json.
-- [ ] 3.2 Create data/cases/mansion_case.json.
-- [ ] 3.3 Prove mansion_case.json has exactly one solution.
-- [ ] 3.4 Create data/dialogue/mansion.json.
-- [ ] 3.5 Integration test tutorial gates.
+- [x] 3.1 Create data/dialogue/tutorial.json.
+- [x] 3.2 Create data/cases/mansion_case.json.
+- [x] 3.3 Prove mansion_case.json has exactly one solution.
+- [x] 3.4 Create data/dialogue/mansion.json.
+- [x] 3.5 Integration test tutorial gates.
 
 ## Phase 4: Scenes, UI, and Touch
 

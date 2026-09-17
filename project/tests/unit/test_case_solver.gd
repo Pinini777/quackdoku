@@ -30,3 +30,10 @@ func test_apply_contradiction():
 	solver.apply(state, CaseSolver.GridMove.new("suspect", "A", "room", "X", CaseDefinition.CellState.CONFIRMED))
 	var result := solver.apply(state, CaseSolver.GridMove.new("suspect", "B", "room", "X", CaseDefinition.CellState.CONFIRMED))
 	assert_true(result.contradiction)
+
+func test_mansion_case_is_unique():
+	var solver := CaseSolver.new()
+	var result := solver.validate(_load_case("res://data/cases/mansion_case.json"))
+	assert_true(result.valid, result.error)
+	assert_eq(result.solution_count, 1)
+	assert_true(result.murderer_deterministic)

@@ -35,7 +35,9 @@ func validate(definition: CaseDefinition) -> ValidationResult:
 	res.solution_count = solutions.size()
 	res.valid = res.solution_count == 1
 	if res.valid:
-		res.murderer_deterministic = _murderer_for(solutions[0], definition) == definition.murderer_value
+		var murderer := _murderer_for(solutions[0], definition)
+		var category_values: Array = definition.categories.get(definition.murderer_category, [])
+		res.murderer_deterministic = not murderer.is_empty() and definition.murderer_value in category_values
 	else:
 		res.error = "Expected exactly one solution, found %d" % res.solution_count
 	return res

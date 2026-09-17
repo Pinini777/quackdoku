@@ -1,0 +1,35 @@
+{
+  "title": "Detective Academy",
+  "max_seconds": 300,
+  "allow_skip": true,
+  "intro": "Before the mansion, a quick practice grid.",
+  "steps": [
+    {"id": "welcome", "type": "narrative", "speaker": "Instructor", "text": "Welcome, recruit. Let's learn the deduction board."},
+    {"id": "row_rule", "type": "gate", "rule": "row", "text": "Each row can hold only one answer. Place Pip in the Study.", "expected": {"category_a": "suspect", "value_a": "Pip", "category_b": "room", "value_b": "Study", "state": "confirmed"}},
+    {"id": "column_rule", "type": "gate", "rule": "column", "text": "Each column can hold only one answer. Since Pip is in the Study, exclude Squeak from the Study.", "expected": {"category_a": "suspect", "value_a": "Squeak", "category_b": "room", "value_b": "Study", "state": "excluded"}},
+    {"id": "clue_rule", "type": "gate", "rule": "clue", "text": "Clues are facts. The clue says Webber arrived before Squeak.", "expected": {"type": "apply_clue", "constraint_index": 5}},
+    {"id": "practice_complete", "type": "gate", "rule": "complete", "text": "Finish the practice grid.", "expected": {"type": "grid_complete"}}
+  ],
+  "skip_prompt": "Practice is taking a while. Skip to the mansion case?",
+  "complete_transition": "mansion_explore",
+  "practice_case": {
+    "title": "Practice Grid",
+    "version": "1",
+    "categories": {
+      "suspect": ["Pip", "Squeak", "Webber"],
+      "room": ["Study", "Kitchen", "Garden"],
+      "time": ["8pm", "9pm", "10pm"],
+      "item": ["Pen", "Cup", "Seed"]
+    },
+    "constraints": [
+      {"category_a": "suspect", "value_a": "Pip", "op": 0, "category_b": "room", "value_b": "Study"},
+      {"category_a": "suspect", "value_a": "Webber", "op": 0, "category_b": "room", "value_b": "Garden"},
+      {"category_a": "suspect", "value_a": "Pip", "op": 0, "category_b": "time", "value_b": "8pm"},
+      {"category_a": "suspect", "value_a": "Pip", "op": 0, "category_b": "item", "value_b": "Pen"},
+      {"category_a": "suspect", "value_a": "Squeak", "op": 1, "category_b": "item", "value_b": "Cup"},
+      {"category_a": "suspect", "value_a": "Webber", "op": 2, "category_b": "suspect", "value_b": "Squeak"}
+    ],
+    "murderer_category": "item",
+    "murderer_value": "Pen"
+  }
+}
